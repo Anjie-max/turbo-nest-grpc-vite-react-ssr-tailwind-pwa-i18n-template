@@ -5,11 +5,16 @@ import { CreateUserDto, PaginationDto, UpdateUserDto, Users } from '@common/hms-
 import { User } from '@common/hms-lib';
 import { randomUUID } from 'crypto';
 import { Observable, Subject } from 'rxjs';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService implements OnModuleInit{
   //static user data for demo purpose only
   private readonly users:User[] = [];
+
+  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>){}
 
   onModuleInit() {
       for (let i=0; i <= 100; i++){
